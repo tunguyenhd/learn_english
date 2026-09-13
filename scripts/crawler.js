@@ -5,8 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const jsonPath = path.resolve(__dirname, '../src/data/vocabulary.json');
-const publicJsonPath = path.resolve(__dirname, '../public/data/vocabulary.json');
+const jsonPath = path.resolve(__dirname, '../lib/data/vocabulary.json');
 
 async function runCrawler() {
   console.log('--- Bắt đầu quy trình cào dữ liệu từ vựng ---');
@@ -76,10 +75,7 @@ async function runCrawler() {
   fs.writeFileSync(jsonPath, minifiedJson, 'utf8');
   console.log(`Lưu file thành công: ${jsonPath}`);
 
-  if (fs.existsSync(path.dirname(publicJsonPath))) {
-    fs.writeFileSync(publicJsonPath, minifiedJson, 'utf8');
-    console.log(`Lưu file thành công: ${publicJsonPath}`);
-  }
+
 
   console.log(`--- Hoàn thành cào dữ liệu! Thêm mới ${addedCount} từ. Tổng cộng: ${updatedTotalWords} từ. ---`);
 }

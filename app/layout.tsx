@@ -8,10 +8,22 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+import type { Viewport } from 'next';
+
+export const viewport: Viewport = {
+  themeColor: '#0f172a',
+};
+
 export const metadata: Metadata = {
   title: 'EngMastery - Nền tảng học tiếng Anh cá nhân hóa',
-  description: 'Học IELTS và TOEIC hiệu quả với 1,000+ từ vựng, ngữ pháp, bài tập thực hành và theo dõi tiến độ.',
+  description: 'Website học tiếng Anh IELTS và TOEIC với từ vựng, ngữ pháp và bài tập thực hành.',
   keywords: ['IELTS', 'TOEIC', 'English learning', 'vocabulary', 'grammar'],
+  manifest: '/learn_english/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'EngMastery',
+  },
 };
 
 export default function RootLayout({

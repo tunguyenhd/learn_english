@@ -1,0 +1,21 @@
+{
+  "name": "EngMastery",
+  "short_name": "EngMastery",
+  "description": "Nền tảng học tiếng Anh cá nhân hóa",
+  "start_url": "/learn_english/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/learn_english/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/learn_english/icons.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -32,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi">
-      <body className={`${inter.variable} ${inter.className}`}>
+    <html lang="vi" suppressHydrationWarning>
+      <body className={`${inter.variable} ${inter.className}`} suppressHydrationWarning>
         <div className="app-container animate-fade-in">
           <Header />
           <main>{children}</main>

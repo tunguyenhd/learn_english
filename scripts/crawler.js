@@ -22,7 +22,10 @@ async function runCrawler() {
   // Tập hợp các ID và Word đã tồn tại để tránh trùng lặp
   const existingWords = new Set();
   database.topics.forEach(t => {
-    t.words.forEach(w => existingWords.add(w.word.toLowerCase()));
+    t.words.forEach(w => {
+      const wordString = Array.isArray(w) ? w[1] : w.word;
+      existingWords.add(wordString.toLowerCase());
+    });
   });
 
   // Danh sách từ vựng mở rộng - 200+ từ cho nhiều chủ đề
@@ -196,14 +199,16 @@ async function runCrawler() {
       const targetTopic = database.topics.find(t => t.id === candidate.topicId);
       if (targetTopic) {
         const nextId = targetTopic.id * 1000 + targetTopic.words.length + 1;
-        targetTopic.words.push({
-          id: nextId,
-          word: candidate.word,
-          pos: candidate.pos,
-          phonetic: candidate.phonetic,
-          definitionVi: candidate.definitionVi,
-          example: candidate.example
-        });
+        
+        // Luôn push dưới dạng mảng nén (Array of Arrays)
+        targetTopic.words.push([
+          nextId,
+          candidate.word,
+          candidate.pos,
+          candidate.phonetic,
+          candidate.definitionVi,
+          candidate.example || ''
+        ]);
         existingWords.add(candidate.word.toLowerCase());
         addedCount++;
         console.log(`+ Đã thêm từ mới: "${candidate.word}" vào chủ đề "${targetTopic.title}"`);

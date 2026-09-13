@@ -1,10 +1,38 @@
 import vocabularyJson from './vocabulary.json';
 import type { TopicData, VocabularyJsonPayload, QuizQuestion, VocabularyItem } from '@/lib/types';
 
-const data = vocabularyJson as VocabularyJsonPayload;
+const data = vocabularyJson as unknown as {
+  metadata: any;
+  questions: QuizQuestion[];
+  topics: {
+    id: number;
+    certType: string;
+    title: string;
+    description: string;
+    words: any[];
+  }[];
+};
 
-// Loaded and rendered directly from vocabulary.json
-export const topicsData: TopicData[] = data.topics;
+// Map compressed Array of Arrays back to Object structure
+export const topicsData: TopicData[] = data.topics.map(t => ({
+  ...t,
+  words: t.words.map(w => {
+    // Nếu nó đã là mảng (đã nén), bung nó ra
+    if (Array.isArray(w)) {
+      return {
+        id: w[0],
+        word: w[1],
+        pos: w[2],
+        phonetic: w[3],
+        definitionVi: w[4],
+        example: w[5] || ''
+      };
+    }
+    // Fallback nếu vẫn là object (chưa nén)
+    return w;
+  })
+}));
+
 export const mockQuestionsData: QuizQuestion[] = data.questions;
 export const vocabularyMetadata = data.metadata;
 

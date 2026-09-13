@@ -64,6 +64,13 @@ export interface IrregularVerb {
   meaning: string;
 }
 
+export interface RegularVerb {
+  verb: string;
+  ed: string;
+  pronunciation: '/t/' | '/d/' | '/id/';
+  meaning: string;
+}
+
 // ==========================================
 // Skills Types
 // ==========================================

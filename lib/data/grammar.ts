@@ -1,6 +1,6 @@
-import type { TenseItem, GrammarTopicItem, IrregularVerb } from '@/lib/types';
+import type { TenseItem, GrammarTopicItem, IrregularVerb, RegularVerb } from '@/lib/types';
 
-export type { TenseItem, GrammarTopicItem, IrregularVerb };
+export type { TenseItem, GrammarTopicItem, IrregularVerb, RegularVerb };
 
 export const tensesData: TenseItem[] = [
   {
@@ -257,6 +257,63 @@ export const grammarTopicsData: GrammarTopicItem[] = [
       { heading: "Đảo ngữ với Hardly ... when", detail: "Hardly + had + S + V3/ed + when + S + V2/ed", example: "Hardly had she left when it began to rain." },
       { heading: "Đảo ngữ với Not only ... but also", detail: "Not only + Trợ động từ + S + V + but also ...", example: "Not only is he smart, but he is also hardworking." }
     ]
+  },
+  {
+    id: "articles",
+    title: "Articles (A/An/The)",
+    titleVi: "Mạo Từ",
+    desc: "Mạo từ đứng trước danh từ để cho biết danh từ đó đang chỉ đối tượng xác định hay không xác định.",
+    rules: [
+      { heading: "Mạo từ không xác định (A / An)", detail: "Dùng trước danh từ đếm được số ít, chỉ đối tượng chung chung chưa xác định. Dùng 'An' trước nguyên âm (u, e, o, a, i).", example: "I bought a book and an apple." },
+      { heading: "Mạo từ xác định (The)", detail: "Dùng cho đối tượng cả người nói và người nghe đều biết, vật duy nhất (the sun, the moon), hoặc nhạc cụ.", example: "The book you gave me is great. / He plays the piano." },
+      { heading: "Trường hợp không dùng mạo từ", detail: "Trước danh từ trừu tượng, tên quốc gia, môn thể thao, hoặc danh từ số nhiều chung chung.", example: "Love is blind. / She plays tennis." }
+    ]
+  },
+  {
+    id: "prepositions",
+    title: "Prepositions of Time & Place",
+    titleVi: "Giới Từ Thời Gian & Nơi Chốn",
+    desc: "Giới từ chỉ thời gian và nơi chốn rất hay gặp (In, On, At) theo quy tắc từ chung đến riêng.",
+    rules: [
+      { heading: "In (Bao quát, lớn)", detail: "Nơi chốn: Trong 1 không gian kín, thành phố, quốc gia. Thời gian: Tháng, năm, thập kỷ, thế kỷ, mùa.", example: "He lives in London. / I was born in 1999." },
+      { heading: "On (Bề mặt, thứ/ngày)", detail: "Nơi chốn: Trên bề mặt (on the table), tên đường (on Wall Street). Thời gian: Ngày cụ thể, thứ trong tuần.", example: "The book is on the desk. / We meet on Monday." },
+      { heading: "At (Điểm cụ thể, giờ)", detail: "Nơi chốn: Một địa điểm chính xác (at the station, at home). Thời gian: Giờ cụ thể, dịp lễ.", example: "I am waiting at the bus stop. / The meeting starts at 8 AM." }
+    ]
+  },
+  {
+    id: "question-tags",
+    title: "Question Tags",
+    titleVi: "Câu Hỏi Đuôi",
+    desc: "Câu hỏi ngắn ở cuối câu trần thuật dùng để xác nhận thông tin.",
+    rules: [
+      { heading: "Quy tắc cơ bản", detail: "Khẳng định -> Đuôi phủ định. Phủ định -> Đuôi khẳng định.", example: "You are a student, aren't you? / She didn't call, did she?" },
+      { heading: "Trường hợp đặc biệt: I am", detail: "I am... -> aren't I?", example: "I am late, aren't I?" },
+      { heading: "Trường hợp đặc biệt: Let's", detail: "Let's... -> shall we?", example: "Let's go to the beach, shall we?" },
+      { heading: "Các từ mang nghĩa phủ định", detail: "Never, seldom, hardly, rarely, little... -> Đuôi KHẲNG ĐỊNH.", example: "He never drinks alcohol, does he?" }
+    ]
+  },
+  {
+    id: "quantifiers",
+    title: "Quantifiers",
+    titleVi: "Lượng Từ",
+    desc: "Từ chỉ số lượng đứng trước danh từ để cho biết số lượng nhiều hay ít.",
+    rules: [
+      { heading: "Some / Any", detail: "Some: Câu khẳng định, lời mời. Any: Câu phủ định, câu hỏi.", example: "I have some apples. / Do you have any money?" },
+      { heading: "Much / Many", detail: "Much: Đi với danh từ không đếm được. Many: Đi với danh từ đếm được số nhiều.", example: "How much time do we have? / How many books did you read?" },
+      { heading: "A few / Few (Đếm được)", detail: "A few: Một vài (đủ dùng). Few: Rất ít (hầu như không có, mang nghĩa tiêu cực).", example: "I have a few friends. (Tôi có vài người bạn) / I have few friends. (Tôi có rất ít bạn)" },
+      { heading: "A little / Little (Không đếm được)", detail: "A little: Một chút (đủ dùng). Little: Rất ít (hầu như không có).", example: "I have a little money left. / There is little hope." }
+    ]
+  },
+  {
+    id: "used-to",
+    title: "Used to / Be used to / Get used to",
+    titleVi: "Cấu trúc Used To",
+    desc: "Sự khác biệt giữa thói quen trong quá khứ và việc làm quen với điều gì đó ở hiện tại.",
+    rules: [
+      { heading: "Used to + V(nguyên thể)", detail: "Thói quen hoặc tình trạng trong quá khứ, bây giờ không còn nữa.", example: "I used to smoke, but I quit last year." },
+      { heading: "Be used to + V-ing / Noun", detail: "Đã quen với việc gì đó ở hiện tại.", example: "I am used to waking up early." },
+      { heading: "Get used to + V-ing / Noun", detail: "Đang dần làm quen với việc gì đó.", example: "She is getting used to the cold weather in Canada." }
+    ]
   }
 ];
 
@@ -445,4 +502,40 @@ export const irregularVerbsData = [
   { v1: "withstand", v2: "withstood", v3: "withstood", meaning: "chịu đựng, chống lại" },
   { v1: "wring", v2: "wrung", v3: "wrung", meaning: "vắt nước" },
   { v1: "write", v2: "wrote", v3: "written", meaning: "viết" }
+];
+
+export const regularVerbsData: RegularVerb[] = [
+  // Âm /t/ (Kết thúc bằng âm vô thanh: p, k, f, s, sh, ch, th)
+  { verb: "look", ed: "looked", pronunciation: "/t/", meaning: "nhìn" },
+  { verb: "watch", ed: "watched", pronunciation: "/t/", meaning: "xem" },
+  { verb: "wash", ed: "washed", pronunciation: "/t/", meaning: "rửa" },
+  { verb: "stop", ed: "stopped", pronunciation: "/t/", meaning: "dừng lại" },
+  { verb: "laugh", ed: "laughed", pronunciation: "/t/", meaning: "cười" },
+  { verb: "kiss", ed: "kissed", pronunciation: "/t/", meaning: "hôn" },
+  { verb: "help", ed: "helped", pronunciation: "/t/", meaning: "giúp đỡ" },
+  { verb: "work", ed: "worked", pronunciation: "/t/", meaning: "làm việc" },
+  { verb: "fix", ed: "fixed", pronunciation: "/t/", meaning: "sửa chữa" },
+  
+  // Âm /id/ (Kết thúc bằng âm t, d)
+  { verb: "want", ed: "wanted", pronunciation: "/id/", meaning: "muốn" },
+  { verb: "need", ed: "needed", pronunciation: "/id/", meaning: "cần" },
+  { verb: "decide", ed: "decided", pronunciation: "/id/", meaning: "quyết định" },
+  { verb: "invite", ed: "invited", pronunciation: "/id/", meaning: "mời" },
+  { verb: "visit", ed: "visited", pronunciation: "/id/", meaning: "thăm" },
+  { verb: "start", ed: "started", pronunciation: "/id/", meaning: "bắt đầu" },
+  { verb: "wait", ed: "waited", pronunciation: "/id/", meaning: "đợi chờ" },
+  { verb: "add", ed: "added", pronunciation: "/id/", meaning: "thêm vào" },
+  { verb: "paint", ed: "painted", pronunciation: "/id/", meaning: "sơn, vẽ" },
+  
+  // Âm /d/ (Còn lại: Kết thúc bằng âm hữu thanh và nguyên âm)
+  { verb: "play", ed: "played", pronunciation: "/d/", meaning: "chơi" },
+  { verb: "learn", ed: "learned", pronunciation: "/d/", meaning: "học" },
+  { verb: "call", ed: "called", pronunciation: "/d/", meaning: "gọi" },
+  { verb: "clean", ed: "cleaned", pronunciation: "/d/", meaning: "dọn dẹp" },
+  { verb: "love", ed: "loved", pronunciation: "/d/", meaning: "yêu thích" },
+  { verb: "open", ed: "opened", pronunciation: "/d/", meaning: "mở" },
+  { verb: "close", ed: "closed", pronunciation: "/d/", meaning: "đóng" },
+  { verb: "listen", ed: "listened", pronunciation: "/d/", meaning: "lắng nghe" },
+  { verb: "use", ed: "used", pronunciation: "/d/", meaning: "sử dụng" },
+  { verb: "try", ed: "tried", pronunciation: "/d/", meaning: "cố gắng, thử" },
 ];

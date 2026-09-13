@@ -38,6 +38,22 @@ export default function TopicListPage() {
             <span>Nạp từ <strong>vocabulary.json</strong>: {vocabularyMetadata.totalWords} từ vựng ({vocabularyMetadata.totalTopics} chủ đề)</span>
           </div>
         )}
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+          <button className="btn btn-outline" style={{ fontSize: '0.9rem' }} onClick={() => router.push(`/${certType}/vocabulary/import`)}>
+            📥 Import Từ Vựng
+          </button>
+          <button className="btn btn-outline" style={{ fontSize: '0.9rem' }} onClick={() => router.push(`/${certType}/practice/flashcard`)}>
+            📇 Flashcards
+          </button>
+          <button className="btn btn-outline" style={{ fontSize: '0.9rem' }} onClick={() => router.push(`/${certType}/practice/fill-blank`)}>
+            ✏️ Điền từ
+          </button>
+          <button className="btn btn-outline" style={{ fontSize: '0.9rem' }} onClick={() => router.push(`/${certType}/practice/matching`)}>
+            🔗 Nối từ
+          </button>
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>

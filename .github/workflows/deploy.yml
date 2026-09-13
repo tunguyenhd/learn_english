@@ -38,11 +38,13 @@ jobs:
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
+        with:
+          static_site_generator: next
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './out'
 
       - name: Deploy to GitHub Pages
         id: deployment

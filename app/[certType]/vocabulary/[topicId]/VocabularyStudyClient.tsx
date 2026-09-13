@@ -16,8 +16,8 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
   const brandColor = certType === 'ielts' ? 'var(--brand-ielts)' : 'var(--brand-toeic)';
 
   return (
-    <div className="animate-fade-in" style={{ display: 'flex', gap: '2rem', maxWidth: '1100px', margin: '0 auto', paddingBottom: '4rem', alignItems: 'flex-start' }}>
-      <div style={{ flex: 1, maxWidth: '800px', width: '100%' }}>
+    <div className="animate-fade-in" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', maxWidth: '1100px', margin: '0 auto', paddingBottom: '4rem', alignItems: 'flex-start' }}>
+      <div style={{ flex: '1 1 300px', maxWidth: '800px', width: '100%' }}>
         <BackButton href={`/${certType}/vocabulary`} label="Back to Topics" />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -57,28 +57,10 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
             </div>
           ))}
         </div>
-
-        {/* Mobile fallback buttons (hidden on md and up if we had full tailwind class control, but here we just show it at bottom for smaller screens) */}
-        <div className="md:hidden" style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <button
-            className="btn btn-primary"
-            style={{ background: brandColor, padding: '1rem 2rem', fontSize: '1.1rem' }}
-            onClick={() => router.push(`/${certType}/practice/matching`)}
-          >
-            Nối từ (Matching Game)
-          </button>
-          <button
-            className="btn btn-outline"
-            style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}
-            onClick={() => router.push(`/${certType}/practice/fill-blank`)}
-          >
-            Điền từ (Fill in the Blanks)
-          </button>
-        </div>
       </div>
 
-      {/* Sticky Sidebar for Desktop */}
-      <div className="hidden md:flex" style={{ position: 'sticky', top: '6rem', width: '280px', flexDirection: 'column', gap: '1rem', flexShrink: 0 }}>
+      {/* Sticky Sidebar */}
+      <div style={{ display: 'flex', flex: '1 1 250px', position: 'sticky', top: '6rem', maxWidth: '300px', flexDirection: 'column', gap: '1rem', flexShrink: 0 }}>
         <div className="card glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
           <h3 style={{ margin: '0 0 0.5rem 0', color: brandColor }}>Practice Mode</h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>

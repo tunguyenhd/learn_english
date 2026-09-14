@@ -1,123 +1,108 @@
 'use client';
 
-import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { tensesData, grammarTopicsData } from '@/lib/data/grammar';
+import { tensesData } from '@/lib/data/grammar';
 import { BackButton } from '@/components/layout/BackButton';
+import { Star, Target, Trophy } from 'lucide-react';
 import type { CertType } from '@/lib/types';
 
 export default function TensesPage() {
   const params = useParams<{ certType: string }>();
   const certType = params.certType as CertType;
   const brandColor = certType === 'ielts' ? 'var(--brand-ielts)' : 'var(--brand-toeic)';
+  const isIELTS = certType === 'ielts';
 
-  const [activeTab, setActiveTab] = useState<'tenses' | 'topics'>('tenses');
+  const groupedTenses = {
+    beginner: tensesData.filter(t => t.level === 'beginner'),
+    intermediate: tensesData.filter(t => t.level === 'intermediate'),
+    advanced: tensesData.filter(t => t.level === 'advanced'),
+  };
+
+  const levelConfigs = {
+    beginner: {
+      title: 'Beginner Level',
+      desc: isIELTS ? 'Band 0 - 4.5' : 'Toeic 0 - 350',
+      icon: <Star size={24} color="var(--brand-toeic)" />
+    },
+    intermediate: {
+      title: 'Intermediate Level',
+      desc: isIELTS ? 'Band 5.0 - 6.0' : 'Toeic 350 - 650',
+      icon: <Target size={24} color="var(--brand-ielts)" />
+    },
+    advanced: {
+      title: 'Advanced Level',
+      desc: isIELTS ? 'Band 6.5 - 8.0+' : 'Toeic 650 - 990',
+      icon: <Trophy size={24} color="var(--accent-warning)" />
+    }
+  };
+
+  const renderTenseCard = (tense: any) => (
+    <div key={tense.id} className="card glass-panel" style={{ padding: '2rem' }}>
+      <h3 style={{ fontSize: '1.4rem', marginBottom: '1rem', color: brandColor }}>{tense.name}</h3>
+
+      <div style={{ marginBottom: '1.25rem' }}>
+        <strong style={{ color: 'var(--text-primary)' }}>Cách dùng:</strong>
+        <p style={{ color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: '1.6' }}>{tense.usage}</p>
+      </div>
+
+      {tense.signalWords && (
+        <div style={{ marginBottom: '1.25rem', padding: '0.75rem', background: 'rgba(255, 255, 255, 0.03)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--brand-toeic)' }}>
+          <strong>Dấu hiệu nhận biết:</strong> <span style={{ color: 'var(--text-secondary)' }}>{tense.signalWords}</span>
+        </div>
+      )}
+
+      <div style={{ marginBottom: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <strong>Công thức:</strong>
+        {tense.formulas.map((f: any, i: number) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: '140px 1fr', background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: 'var(--radius-sm)' }}>
+            <span style={{ fontWeight: 600 }}>{f.type}</span>
+            <span style={{ color: 'var(--text-primary)', fontFamily: 'monospace' }}>{f.formula}</span>
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <strong>Ví dụ minh họa:</strong>
+        <div style={{ padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)', fontStyle: 'italic', color: 'var(--text-secondary)', borderLeft: `3px solid ${brandColor}`, marginTop: '0.5rem' }}>
+          &quot;{tense.example}&quot;
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="animate-fade-in" style={{ maxWidth: '900px', margin: '0 auto', paddingBottom: '4rem' }}>
       <BackButton href={`/${certType}/grammar`} label="Back to Grammar" />
 
-      <div style={{ marginBottom: '1.5rem' }}>
-        <h2 style={{ color: brandColor }}>English Grammar Masterclass</h2>
-        <p style={{ color: 'var(--text-secondary)' }}>Tổng hợp đầy đủ 12 thì Tiếng Anh và các chuyên đề ngữ pháp trọng tâm.</p>
+      <div style={{ marginBottom: '3rem' }}>
+        <h2 style={{ color: brandColor }}>12 English Tenses</h2>
+        <p style={{ color: 'var(--text-secondary)' }}>Nắm vững 12 thì Tiếng Anh được chia theo từng cấp độ học.</p>
       </div>
 
-      {/* Navigation Tabs */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '0.5rem' }}>
-        <button
-          className="btn"
-          style={{
-            background: activeTab === 'tenses' ? brandColor : 'transparent',
-            color: activeTab === 'tenses' ? '#fff' : 'var(--text-secondary)',
-            border: 'none',
-            padding: '0.75rem 1.5rem',
-            borderRadius: 'var(--radius-sm)',
-            fontWeight: 600
-          }}
-          onClick={() => setActiveTab('tenses')}
-        >
-          12 Thì Tiếng Anh ({tensesData.length})
-        </button>
-        <button
-          className="btn"
-          style={{
-            background: activeTab === 'topics' ? brandColor : 'transparent',
-            color: activeTab === 'topics' ? '#fff' : 'var(--text-secondary)',
-            border: 'none',
-            padding: '0.75rem 1.5rem',
-            borderRadius: 'var(--radius-sm)',
-            fontWeight: 600
-          }}
-          onClick={() => setActiveTab('topics')}
-        >
-          Chuyên Đề Ngữ Pháp ({grammarTopicsData.length})
-        </button>
-      </div>
+      {(['beginner', 'intermediate', 'advanced'] as const).map(level => {
+        const tenses = groupedTenses[level];
+        if (tenses.length === 0) return null;
 
-      {/* Tab 1: 12 Tenses */}
-      {activeTab === 'tenses' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          {tensesData.map(tense => (
-            <div key={tense.id} className="card glass-panel" style={{ padding: '2rem' }}>
-              <h3 style={{ fontSize: '1.4rem', marginBottom: '1rem', color: brandColor }}>{tense.name}</h3>
+        const config = levelConfigs[level];
 
-              <div style={{ marginBottom: '1.25rem' }}>
-                <strong style={{ color: 'var(--text-primary)' }}>Cách dùng:</strong>
-                <p style={{ color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: '1.6' }}>{tense.usage}</p>
+        return (
+          <div key={level} style={{ marginBottom: '4rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--glass-border)' }}>
+              <div style={{ padding: '0.5rem', background: 'var(--bg-tertiary)', borderRadius: '0.5rem' }}>
+                {config.icon}
               </div>
-
-              {tense.signalWords && (
-                <div style={{ marginBottom: '1.25rem', padding: '0.75rem', background: 'rgba(255, 255, 255, 0.03)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--brand-toeic)' }}>
-                  <strong>Dấu hiệu nhận biết:</strong> <span style={{ color: 'var(--text-secondary)' }}>{tense.signalWords}</span>
-                </div>
-              )}
-
-              <div style={{ marginBottom: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <strong>Công thức:</strong>
-                {tense.formulas.map((f, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '140px 1fr', background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: 'var(--radius-sm)' }}>
-                    <span style={{ fontWeight: 600 }}>{f.type}</span>
-                    <span style={{ color: 'var(--text-primary)', fontFamily: 'monospace' }}>{f.formula}</span>
-                  </div>
-                ))}
-              </div>
-
               <div>
-                <strong>Ví dụ minh họa:</strong>
-                <div style={{ padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)', fontStyle: 'italic', color: 'var(--text-secondary)', borderLeft: `3px solid ${brandColor}`, marginTop: '0.5rem' }}>
-                  &quot;{tense.example}&quot;
-                </div>
+                <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{config.title}</h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>{config.desc}</p>
               </div>
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* Tab 2: Grammar Topics */}
-      {activeTab === 'topics' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          {grammarTopicsData.map(topic => (
-            <div key={topic.id} className="card glass-panel" style={{ padding: '2rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <h3 style={{ fontSize: '1.4rem', color: brandColor }}>{topic.title} ({topic.titleVi})</h3>
-              </div>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: '1.6' }}>{topic.desc}</p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {topic.rules.map((rule, idx) => (
-                  <div key={idx} style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: 'var(--radius-sm)' }}>
-                    <h4 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem' }}>• {rule.heading}</h4>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.95rem' }}>{rule.detail}</p>
-                    <div style={{ background: 'rgba(0,0,0,0.2)', padding: '0.75rem', borderRadius: '4px', fontStyle: 'italic', borderLeft: `3px solid ${brandColor}`, fontSize: '0.9rem' }}>
-                      Ví dụ: {rule.example}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              {tenses.map(renderTenseCard)}
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        );
+      })}
     </div>
   );
 }

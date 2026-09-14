@@ -9,6 +9,7 @@ const data = vocabularyJson as unknown as {
     certType: string;
     title: string;
     description: string;
+    level?: 'beginner' | 'intermediate' | 'advanced';
     words: any[];
   }[];
 };

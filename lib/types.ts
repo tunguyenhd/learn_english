@@ -14,6 +14,7 @@ export interface VocabularyItem {
 export interface TopicData {
   id: number;
   title: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   words: VocabularyItem[];
 }
 
@@ -43,6 +44,7 @@ export interface QuizQuestion {
 export interface TenseItem {
   id: number;
   name: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   usage: string;
   formulas: { type: string; formula: string }[];
   example: string;
@@ -53,6 +55,7 @@ export interface GrammarTopicItem {
   id: string;
   title: string;
   titleVi: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   desc: string;
   rules: { heading: string; detail: string; example: string }[];
 }
@@ -80,6 +83,7 @@ export interface ReadingPassage {
   cert: 'ielts' | 'toeic';
   category: string;
   title: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   passage: string;
   questions: {
     id: number;
@@ -94,6 +98,7 @@ export interface ListeningExercise {
   cert: 'ielts' | 'toeic';
   category: string;
   title: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   transcript: string;
   questions: {
     id: number;
@@ -108,6 +113,7 @@ export interface SpeakingTopic {
   cert: 'ielts' | 'toeic';
   category: string;
   title: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   prompts: string[];
   tips: string;
 }
@@ -117,6 +123,7 @@ export interface WritingPrompt {
   cert: 'ielts' | 'toeic';
   category: string;
   title: string;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   prompt: string;
   sampleAnswer: string;
 }

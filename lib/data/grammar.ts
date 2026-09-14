@@ -5,6 +5,7 @@ export type { TenseItem, GrammarTopicItem, IrregularVerb, RegularVerb };
 export const tensesData: TenseItem[] = [
   {
     id: 1,
+    level: 'beginner',
     name: "1. Present Simple (Hiện tại đơn)",
     usage: "Diễn tả thói quen, hành động lặp đi lặp lại, chân lý/sự thật hiển nhiên hoặc một lịch trình có sẵn cố định.",
     formulas: [
@@ -17,6 +18,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 2,
+    level: 'beginner',
     name: "2. Present Continuous (Hiện tại tiếp diễn)",
     usage: "Diễn tả hành động đang diễn ra ngay tại thời điểm nói hoặc một kế hoạch sắp sửa diễn ra trong tương lai gần.",
     formulas: [
@@ -29,6 +31,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 3,
+    level: 'intermediate',
     name: "3. Present Perfect (Hiện tại hoàn thành)",
     usage: "Diễn tả hành động đã xảy ra trong quá khứ nhưng không đề cập thời gian cụ thể, hoặc kết quả còn kéo dài/ảnh hưởng đến hiện tại.",
     formulas: [
@@ -41,6 +44,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 4,
+    level: 'advanced',
     name: "4. Present Perfect Continuous (Hiện tại hoàn thành tiếp diễn)",
     usage: "Nhấn mạnh sự liên tục, kéo dài của một hành động bắt đầu trong quá khứ và vẫn đang tiếp diễn ở hiện tại.",
     formulas: [
@@ -53,6 +57,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 5,
+    level: 'beginner',
     name: "5. Past Simple (Quá khứ đơn)",
     usage: "Diễn tả hành động đã xảy ra và kết thúc hoàn toàn tại một thời điểm xác định trong quá khứ.",
     formulas: [
@@ -65,6 +70,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 6,
+    level: 'intermediate',
     name: "6. Past Continuous (Quá khứ tiếp diễn)",
     usage: "Diễn tả hành động đang diễn ra tại một thời điểm cụ thể trong quá khứ hoặc một hành động đang diễn ra thì hành động khác xen vào.",
     formulas: [
@@ -77,6 +83,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 7,
+    level: 'advanced',
     name: "7. Past Perfect (Quá khứ hoàn thành)",
     usage: "Diễn tả một hành động xảy ra và hoàn thành trước một hành động khác hoặc trước một mốc thời gian trong quá khứ.",
     formulas: [
@@ -89,6 +96,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 8,
+    level: 'advanced',
     name: "8. Past Perfect Continuous (Quá khứ hoàn thành tiếp diễn)",
     usage: "Nhấn mạnh khoảng thời gian kéo dài của một hành động diễn ra liên tục trước một hành động khác trong quá khứ.",
     formulas: [
@@ -101,6 +109,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 9,
+    level: 'beginner',
     name: "9. Future Simple (Tương lai đơn)",
     usage: "Diễn tả một quyết định bộc phát ngay thời điểm nói, lời hứa, hoặc dự đoán không có căn cứ cụ thể.",
     formulas: [
@@ -113,6 +122,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 10,
+    level: 'intermediate',
     name: "10. Future Continuous (Tương lai tiếp diễn)",
     usage: "Diễn tả hành động sẽ đang diễn ra tại một mốc thời gian hoặc khoảng thời gian xác định trong tương lai.",
     formulas: [
@@ -125,6 +135,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 11,
+    level: 'advanced',
     name: "11. Future Perfect (Tương lai hoàn thành)",
     usage: "Diễn tả hành động sẽ được hoàn thành trước một mốc thời gian hoặc trước một hành động khác trong tương lai.",
     formulas: [
@@ -137,6 +148,7 @@ export const tensesData: TenseItem[] = [
   },
   {
     id: 12,
+    level: 'advanced',
     name: "12. Future Perfect Continuous (Tương lai hoàn thành tiếp diễn)",
     usage: "Diễn tả hành động đã kéo dài liên tục tới một thời điểm trong tương lai.",
     formulas: [
@@ -152,6 +164,7 @@ export const tensesData: TenseItem[] = [
 export const grammarTopicsData: GrammarTopicItem[] = [
   {
     id: "passive-voice",
+    level: "intermediate",
     title: "Passive Voice",
     titleVi: "Thể Bị Động",
     desc: "Cấu trúc bị động dùng khi muốn nhấn mạnh vào đối tượng chịu tác động của hành động thay vì người thực hiện.",
@@ -165,6 +178,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "conditionals",
+    level: "intermediate",
     title: "Conditional Sentences",
     titleVi: "Câu Điều Kiện",
     desc: "Các dạng câu điều kiện dùng để diễn tả một giả định và kết quả xảy ra.",
@@ -178,6 +192,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "relative-clauses",
+    level: "intermediate",
     title: "Relative Clauses",
     titleVi: "Mệnh Đề Quan Hệ",
     desc: "Mệnh đề bổ nghĩa cho danh từ đứng trước nó bằng các đại từ quan hệ Who, Whom, Which, That, Whose...",
@@ -191,6 +206,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "reported-speech",
+    level: "intermediate",
     title: "Reported Speech",
     titleVi: "Câu Gián Tiếp",
     desc: "Dùng để tường thuật lại lời nói của người khác mà không trích dẫn trực tiếp.",
@@ -201,6 +217,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "subject-verb-agreement",
+    level: "beginner",
     title: "Subject - Verb Agreement",
     titleVi: "Hòa Hợp Chủ Ngữ & Động Từ",
     desc: "Quy tắc quyết định động từ chia ở số ít hay số nhiều phụ thuộc vào chủ ngữ của câu.",
@@ -213,6 +230,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "gerund-infinitive",
+    level: "intermediate",
     title: "Gerunds and Infinitives",
     titleVi: "Danh Động Từ (V-ing) & To-Infinitive",
     desc: "Quy tắc sử dụng V-ing hoặc To-V sau các động từ hoặc giới từ thông dụng.",
@@ -224,6 +242,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "comparisons",
+    level: "beginner",
     title: "Comparisons",
     titleVi: "Các Dạng So Sánh",
     desc: "Tổng hợp các cấu trúc so sánh bằng, so sánh hơn, so sánh nhất và so sánh kép.",
@@ -236,6 +255,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "modal-verbs",
+    level: "beginner",
     title: "Modal Verbs",
     titleVi: "Động Từ Khuyết Thiếu",
     desc: "Diễn tả khả năng, sự cho phép, nghĩa vụ, suy đoán hoặc lời khuyên.",
@@ -248,6 +268,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "inversion",
+    level: "advanced",
     title: "Inversion",
     titleVi: "Đảo Ngữ",
     desc: "Cấu trúc nhấn mạnh bằng cách đưa trạng từ phủ định hoặc từ đặc biệt lên đầu câu và đảo trợ động từ lên trước chủ ngữ.",
@@ -260,6 +281,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "articles",
+    level: "beginner",
     title: "Articles (A/An/The)",
     titleVi: "Mạo Từ",
     desc: "Mạo từ đứng trước danh từ để cho biết danh từ đó đang chỉ đối tượng xác định hay không xác định.",
@@ -271,6 +293,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "prepositions",
+    level: "beginner",
     title: "Prepositions of Time & Place",
     titleVi: "Giới Từ Thời Gian & Nơi Chốn",
     desc: "Giới từ chỉ thời gian và nơi chốn rất hay gặp (In, On, At) theo quy tắc từ chung đến riêng.",
@@ -282,6 +305,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "question-tags",
+    level: "intermediate",
     title: "Question Tags",
     titleVi: "Câu Hỏi Đuôi",
     desc: "Câu hỏi ngắn ở cuối câu trần thuật dùng để xác nhận thông tin.",
@@ -294,6 +318,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "quantifiers",
+    level: "beginner",
     title: "Quantifiers",
     titleVi: "Lượng Từ",
     desc: "Từ chỉ số lượng đứng trước danh từ để cho biết số lượng nhiều hay ít.",
@@ -306,6 +331,7 @@ export const grammarTopicsData: GrammarTopicItem[] = [
   },
   {
     id: "used-to",
+    level: "intermediate",
     title: "Used to / Be used to / Get used to",
     titleVi: "Cấu trúc Used To",
     desc: "Sự khác biệt giữa thói quen trong quá khứ và việc làm quen với điều gì đó ở hiện tại.",

@@ -44,26 +44,38 @@ export default function ReadingPage() {
     <div className="animate-fade-in" style={{ maxWidth: '1200px', margin: '0 auto', paddingBottom: '3rem' }}>
       <BackButton href={`/${certType}/dashboard`} label="Back to Dashboard" />
 
-      {/* Passage Selector Bar */}
-      <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
-        <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>Chọn bài đọc:</span>
-        {availablePassages.map((p, idx) => (
-          <button
-            key={p.id}
-            className="btn"
-            style={{
-              background: selectedPassageIndex === idx ? brandColor : 'var(--bg-tertiary)',
-              color: selectedPassageIndex === idx ? '#fff' : 'var(--text-primary)',
-              border: selectedPassageIndex === idx ? 'none' : '1px solid var(--glass-border)',
-              padding: '0.5rem 1rem',
-              fontSize: '0.9rem',
-              borderRadius: 'var(--radius-sm)'
-            }}
-            onClick={() => handleSelectPassage(idx)}
-          >
-            Bài {idx + 1}: {p.category}
-          </button>
-        ))}
+      {/* Passage Selector Grouped by Level */}
+      <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {(['beginner', 'intermediate', 'advanced'] as const).map(level => {
+          const passagesInLevel = availablePassages.filter(p => (p.level || 'beginner') === level);
+          if (passagesInLevel.length === 0) return null;
+
+          return (
+            <div key={level} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontWeight: 600, color: 'var(--text-secondary)', width: '120px', textTransform: 'capitalize' }}>{level} Level:</span>
+              {passagesInLevel.map((p) => {
+                const globalIdx = availablePassages.findIndex(ap => ap.id === p.id);
+                return (
+                  <button
+                    key={p.id}
+                    className="btn"
+                    style={{
+                      background: selectedPassageIndex === globalIdx ? brandColor : 'var(--bg-tertiary)',
+                      color: selectedPassageIndex === globalIdx ? '#fff' : 'var(--text-primary)',
+                      border: selectedPassageIndex === globalIdx ? 'none' : '1px solid var(--glass-border)',
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.9rem',
+                      borderRadius: 'var(--radius-sm)'
+                    }}
+                    onClick={() => handleSelectPassage(globalIdx)}
+                  >
+                    {p.category}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>

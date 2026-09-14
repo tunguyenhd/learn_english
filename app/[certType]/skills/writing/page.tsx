@@ -62,26 +62,38 @@ export default function WritingPage() {
         <p style={{ color: 'var(--text-secondary)' }}>Luyện viết luận IELTS và viết phản hồi email công việc TOEIC.</p>
       </div>
 
-      {/* Prompt Selector */}
-      <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
-        <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>Chọn đề bài:</span>
-        {availablePrompts.map((item, idx) => (
-          <button
-            key={item.id}
-            className="btn"
-            style={{
-              background: selectedPromptIndex === idx ? brandColor : 'var(--bg-tertiary)',
-              color: selectedPromptIndex === idx ? '#fff' : 'var(--text-primary)',
-              border: selectedPromptIndex === idx ? 'none' : '1px solid var(--glass-border)',
-              padding: '0.5rem 1rem',
-              fontSize: '0.9rem',
-              borderRadius: 'var(--radius-sm)'
-            }}
-            onClick={() => handleSelectPrompt(idx)}
-          >
-            Đề {idx + 1}: {item.category}
-          </button>
-        ))}
+      {/* Prompt Selector Grouped by Level */}
+      <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {(['beginner', 'intermediate', 'advanced'] as const).map(level => {
+          const promptsInLevel = availablePrompts.filter(p => (p.level || 'beginner') === level);
+          if (promptsInLevel.length === 0) return null;
+
+          return (
+            <div key={level} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontWeight: 600, color: 'var(--text-secondary)', width: '120px', textTransform: 'capitalize' }}>{level} Level:</span>
+              {promptsInLevel.map((item) => {
+                const globalIdx = availablePrompts.findIndex(ap => ap.id === item.id);
+                return (
+                  <button
+                    key={item.id}
+                    className="btn"
+                    style={{
+                      background: selectedPromptIndex === globalIdx ? brandColor : 'var(--bg-tertiary)',
+                      color: selectedPromptIndex === globalIdx ? '#fff' : 'var(--text-primary)',
+                      border: selectedPromptIndex === globalIdx ? 'none' : '1px solid var(--glass-border)',
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.9rem',
+                      borderRadius: 'var(--radius-sm)'
+                    }}
+                    onClick={() => handleSelectPrompt(globalIdx)}
+                  >
+                    {item.category}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       {/* Prompt Card */}

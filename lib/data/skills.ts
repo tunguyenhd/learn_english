@@ -5,6 +5,7 @@ export type { ReadingPassage, ListeningExercise, SpeakingTopic, WritingPrompt };
 export const readingPassages: ReadingPassage[] = [
   {
     id: 1,
+    level: 'beginner',
     cert: 'ielts',
     category: "IELTS Academic (Environment)",
     title: "The Impact of Climate Change on Coral Reefs",
@@ -25,6 +26,7 @@ Another significant issue is ocean acidification. As the ocean absorbs excess ca
       },
       {
         id: 2,
+    level: 'intermediate',
         question: "According to the passage, what is the main consequence of ocean acidification on corals?",
         options: [
           "It makes them resistant to diseases.",
@@ -36,6 +38,7 @@ Another significant issue is ocean acidification. As the ocean absorbs excess ca
       },
       {
         id: 3,
+    level: 'advanced',
         question: "What is considered the most critical step to preserve coral reefs?",
         options: [
           "Building artificial underwater reefs.",
@@ -144,6 +147,7 @@ On the other hand, the blurring of boundaries between professional obligations a
   },
   {
     id: 4,
+    level: 'intermediate',
     cert: 'toeic',
     category: "TOEIC Part 7 (Business Inquiry Email)",
     title: "Email: Request for Bulk Catering Quotation",

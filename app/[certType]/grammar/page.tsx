@@ -21,10 +21,17 @@ export default function GrammarListPage() {
     },
     {
       id: 'verbs',
-      title: 'Irregular Verbs',
-      desc: 'Bảng tra cứu động từ bất quy tắc có công cụ tìm kiếm thông minh.',
+      title: 'Verbs Reference',
+      desc: 'Bảng tra cứu động từ bất quy tắc và có quy tắc.',
       icon: <BookMarked size={32} color={brandColor} />,
       path: `/${certType}/grammar/verbs`
+    },
+    {
+      id: 'topics',
+      title: 'Grammar Topics',
+      desc: 'Các chuyên đề ngữ pháp quan trọng theo từng cấp độ.',
+      icon: <AlignLeft size={32} color={brandColor} />,
+      path: `/${certType}/grammar/topics`
     }
   ];
 

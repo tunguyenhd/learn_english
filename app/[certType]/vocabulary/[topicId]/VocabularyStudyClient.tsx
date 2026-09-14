@@ -6,7 +6,7 @@ import { BackButton } from '@/components/layout/BackButton';
 import { AudioButton } from '@/components/ui/AudioButton';
 import type { TopicData } from '@/lib/types';
 
-const BATCH_SIZE = 50;
+const BATCH_SIZE = 100;
 
 interface Props {
   certType: string;

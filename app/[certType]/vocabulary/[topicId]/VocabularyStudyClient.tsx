@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { Shuffle } from 'lucide-react';
 import { BackButton } from '@/components/layout/BackButton';
 import { AudioButton } from '@/components/ui/AudioButton';
 import type { TopicData } from '@/lib/types';
@@ -18,8 +19,24 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
   const brandColor = certType === 'ielts' ? 'var(--brand-ielts)' : 'var(--brand-toeic)';
 
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
-  const visibleWords = topicData.words.slice(0, visibleCount);
-  const hasMore = visibleCount < topicData.words.length;
+  const [isRandom, setIsRandom] = useState(false);
+  const [currentWords, setCurrentWords] = useState(topicData.words);
+
+  const toggleRandom = () => {
+    setIsRandom((prev) => {
+      const nextRandom = !prev;
+      if (nextRandom) {
+        setCurrentWords([...topicData.words].sort(() => Math.random() - 0.5));
+      } else {
+        setCurrentWords(topicData.words);
+      }
+      setVisibleCount(BATCH_SIZE);
+      return nextRandom;
+    });
+  };
+
+  const visibleWords = currentWords.slice(0, visibleCount);
+  const hasMore = visibleCount < currentWords.length;
 
   // IntersectionObserver for infinite scroll
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -51,6 +68,20 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
             <h2 style={{ margin: '0.25rem 0' }}>Study Words ({topicData.words.length} words)</h2>
             <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Review the vocabulary and pronunciation before practicing.</p>
           </div>
+          <button
+            onClick={toggleRandom}
+            className={`btn ${isRandom ? 'btn-primary' : 'btn-outline'}`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              ...(isRandom ? { background: brandColor, borderColor: brandColor } : {})
+            }}
+          >
+            <Shuffle size={18} />
+            {isRandom ? 'Trộn từ: Bật' : 'Trộn từ: Tắt'}
+          </button>
         </div>
 
         <div className="flex flex-col gap-6">
@@ -109,7 +140,7 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
 
         {!hasMore && visibleWords.length > 0 && (
           <div style={{ textAlign: 'center', padding: '1.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-            Hiển thị {visibleWords.length}/{topicData.words.length} từ vựng
+            Hiển thị {visibleWords.length}/{currentWords.length} từ vựng
           </div>
         )}
       </div>

@@ -16,11 +16,11 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
   const brandColor = certType === 'ielts' ? 'var(--brand-ielts)' : 'var(--brand-toeic)';
 
   return (
-    <div className="animate-fade-in" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', maxWidth: '1100px', margin: '0 auto', paddingBottom: '4rem', alignItems: 'flex-start' }}>
-      <div style={{ flex: '1 1 300px', maxWidth: '800px', width: '100%' }}>
+    <div className="animate-fade-in flex flex-col md:flex-row gap-8 max-w-[1100px] mx-auto pb-16 items-start">
+      <div className="w-full flex-1 max-w-[800px]">
         <BackButton href={`/${certType}/vocabulary`} label="Back to Topics" />
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
           <div>
             <span style={{ fontSize: '0.9rem', color: brandColor, textTransform: 'uppercase', fontWeight: 700 }}>
               {topicData.title}
@@ -30,12 +30,12 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className="flex flex-col gap-6">
           {topicData.words.map((item) => (
-            <div key={item.id} className="card glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div key={item.id} className="card glass-panel flex flex-col gap-4">
+              <div className="flex justify-between items-start">
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem' }}>
+                  <div className="flex items-baseline gap-4">
                     <h3 style={{ fontSize: '1.5rem', margin: 0, color: brandColor }}>{item.word}</h3>
                     <span style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>({item.pos})</span>
                   </div>
@@ -60,8 +60,8 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
       </div>
 
       {/* Sticky Sidebar */}
-      <div style={{ display: 'flex', flex: '1 1 250px', position: 'sticky', top: '6rem', maxWidth: '300px', flexDirection: 'column', gap: '1rem', flexShrink: 0 }}>
-        <div className="card glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
+      <div className="flex flex-col gap-4 w-full md:w-[250px] shrink-0 md:sticky md:top-24">
+        <div className="card glass-panel p-6 text-center">
           <h3 style={{ margin: '0 0 0.5rem 0', color: brandColor }}>Practice Mode</h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
             Ready to test your memory? Choose a game to practice these words.

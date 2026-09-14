@@ -104,8 +104,21 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
                 <div style={{ fontWeight: 600, marginBottom: '0.5rem', fontSize: '1.1rem', color: 'var(--text-primary)' }}>
                   {item.definitionVi}
                 </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.04)', borderRadius: '0.5rem', fontStyle: 'italic', color: 'var(--text-secondary)', borderLeft: `3px solid ${brandColor}`, lineHeight: '1.6' }}>
-                  &quot;{item.example}&quot;
+                <div style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.04)', borderRadius: '0.5rem', color: 'var(--text-secondary)', borderLeft: `3px solid ${brandColor}`, lineHeight: '1.6' }}>
+                  <div className="flex justify-between items-start gap-4">
+                    <span style={{ fontStyle: 'italic' }}>&quot;{item.example}&quot;</span>
+                    {item.example && (
+                      <a
+                        href={`https://translate.google.com/?sl=en&tl=vi&text=${encodeURIComponent(item.example)}&op=translate`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs shrink-0"
+                        style={{ color: brandColor, opacity: 0.8, textDecoration: 'none', padding: '0.2rem 0.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}
+                      >
+                        Dịch ↗
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

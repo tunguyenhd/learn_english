@@ -15,9 +15,8 @@ const data = vocabularyJson as unknown as {
 };
 
 // Map compressed Array of Arrays back to Object structure
-export const topicsData: TopicData[] = data.topics.map(t => ({
-  ...t,
-  words: t.words.map(w => {
+export const topicsData: TopicData[] = data.topics.map(t => {
+  const parsedWords = t.words.map(w => {
     // Nếu nó đã là mảng (đã nén), bung nó ra
     if (Array.isArray(w)) {
       return {
@@ -31,8 +30,20 @@ export const topicsData: TopicData[] = data.topics.map(t => ({
     }
     // Fallback nếu vẫn là object (chưa nén)
     return w;
-  })
-}));
+  });
+
+  // Filter out auto-generated placeholder words (missing real Vietnamese definitions)
+  const validWords = parsedWords.filter(w => {
+    const hasFakeExample = w.example?.startsWith('This is a sentence with the word');
+    const hasNoVietnamese = w.word.toLowerCase() === w.definitionVi?.toLowerCase();
+    return !hasFakeExample && !hasNoVietnamese;
+  });
+
+  return {
+    ...t,
+    words: validWords
+  };
+});
 
 export const mockQuestionsData: QuizQuestion[] = data.questions;
 export const vocabularyMetadata = data.metadata;

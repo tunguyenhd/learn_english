@@ -1,10 +1,12 @@
 'use client';
 
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowRight } from 'lucide-react';
 import { BackButton } from '@/components/layout/BackButton';
 import { AudioButton } from '@/components/ui/AudioButton';
 import type { TopicData } from '@/lib/types';
+
+const BATCH_SIZE = 15;
 
 interface Props {
   certType: string;
@@ -14,6 +16,27 @@ interface Props {
 export default function VocabularyStudyClient({ certType, topicData }: Props) {
   const router = useRouter();
   const brandColor = certType === 'ielts' ? 'var(--brand-ielts)' : 'var(--brand-toeic)';
+
+  const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+  const visibleWords = topicData.words.slice(0, visibleCount);
+  const hasMore = visibleCount < topicData.words.length;
+
+  // IntersectionObserver for infinite scroll
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const sentinelCallback = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) observerRef.current.disconnect();
+    if (!node) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount(prev => prev + BATCH_SIZE);
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observerRef.current.observe(node);
+  }, []);
 
   return (
     <div className="animate-fade-in flex flex-col md:flex-row gap-8 max-w-[1100px] mx-auto pb-16 items-start">
@@ -31,7 +54,7 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
         </div>
 
         <div className="flex flex-col gap-6">
-          {topicData.words.map((item) => (
+          {visibleWords.map((item) => (
             <div key={item.id} className="card glass-panel flex flex-col gap-4">
               <div className="flex justify-between items-start">
                 <div>
@@ -57,6 +80,38 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
             </div>
           ))}
         </div>
+
+        {/* Sentinel for infinite scroll */}
+        {hasMore && (
+          <div
+            ref={sentinelCallback}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '2rem',
+              color: 'var(--text-muted)',
+              fontSize: '0.9rem',
+              gap: '0.5rem',
+            }}
+          >
+            <div style={{
+              width: '1.25rem',
+              height: '1.25rem',
+              border: `2px solid ${brandColor}`,
+              borderTopColor: 'transparent',
+              borderRadius: '50%',
+              animation: 'spin 0.8s linear infinite',
+            }} />
+            Loading more...
+          </div>
+        )}
+
+        {!hasMore && visibleWords.length > 0 && (
+          <div style={{ textAlign: 'center', padding: '1.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+            Hiển thị {visibleWords.length}/{topicData.words.length} từ vựng
+          </div>
+        )}
       </div>
 
       {/* Sticky Sidebar */}
@@ -85,6 +140,12 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

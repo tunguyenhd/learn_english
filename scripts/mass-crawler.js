@@ -23,7 +23,7 @@ const TOPIC_SEEDS = {
 
 async function fetchRelatedWords(seed) {
   try {
-    const res = await fetch(`https://api.datamuse.com/words?ml=${seed}&max=50`);
+    const res = await fetch(`https://api.datamuse.com/words?ml=${seed}&max=1000`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.map(item => item.word);

@@ -26,7 +26,6 @@ Another significant issue is ocean acidification. As the ocean absorbs excess ca
       },
       {
         id: 2,
-    level: 'intermediate',
         question: "According to the passage, what is the main consequence of ocean acidification on corals?",
         options: [
           "It makes them resistant to diseases.",
@@ -38,7 +37,6 @@ Another significant issue is ocean acidification. As the ocean absorbs excess ca
       },
       {
         id: 3,
-    level: 'advanced',
         question: "What is considered the most critical step to preserve coral reefs?",
         options: [
           "Building artificial underwater reefs.",
@@ -52,6 +50,7 @@ Another significant issue is ocean acidification. As the ocean absorbs excess ca
   },
   {
     id: 2,
+    level: 'intermediate',
     cert: 'toeic',
     category: "TOEIC Part 7 (Company Notice)",
     title: "Notice: Annual Office Building Maintenance",
@@ -103,6 +102,7 @@ All employees are urged to save their work and shut down all electronic equipmen
   },
   {
     id: 3,
+    level: 'advanced',
     cert: 'ielts',
     category: "IELTS General (Technology & Society)",
     title: "The Psychological Effects of Remote Work",
@@ -211,6 +211,7 @@ export const readingData = readingPassages[0];
 export const listeningDataList: ListeningExercise[] = [
   {
     id: 1,
+    level: 'beginner',
     cert: 'toeic',
     category: "TOEIC Part 4 (Public Announcement)",
     title: "Flight Delay Announcement at Airport",
@@ -242,6 +243,7 @@ export const listeningDataList: ListeningExercise[] = [
   },
   {
     id: 2,
+    level: 'intermediate',
     cert: 'ielts',
     category: "IELTS Section 4 (Academic Lecture)",
     title: "University Lecture: Renewable Energy Strategies",
@@ -273,6 +275,7 @@ export const listeningDataList: ListeningExercise[] = [
   },
   {
     id: 3,
+    level: 'advanced',
     cert: 'toeic',
     category: "TOEIC Part 3 (Workplace Dialogue)",
     title: "Office Discussion: Product Launch Marketing Budget",
@@ -307,6 +310,7 @@ export const listeningDataList: ListeningExercise[] = [
 export const speakingTopicsList: SpeakingTopic[] = [
   {
     id: 1,
+    level: 'beginner',
     cert: 'ielts',
     category: "IELTS Speaking Part 2 (Cue Card)",
     title: "Describe a book you have recently read and enjoyed",
@@ -320,6 +324,7 @@ export const speakingTopicsList: SpeakingTopic[] = [
   },
   {
     id: 2,
+    level: 'intermediate',
     cert: 'toeic',
     category: "TOEIC Speaking Question 3 (Describe a Picture)",
     title: "Describe a busy open-plan modern office setting",
@@ -333,6 +338,7 @@ export const speakingTopicsList: SpeakingTopic[] = [
   },
   {
     id: 3,
+    level: 'advanced',
     cert: 'ielts',
     category: "IELTS Speaking Part 3 (Analytical Discussion)",
     title: "The role of public libraries in the digital era",
@@ -355,6 +361,7 @@ export const speakingData = {
 export const writingPromptsList: WritingPrompt[] = [
   {
     id: 1,
+    level: 'beginner',
     cert: 'ielts',
     category: "IELTS Academic Writing Task 2 (Discussion & Opinion)",
     title: "University Education: Practical Skills vs Pure Academic Pursuit",
@@ -369,6 +376,7 @@ In conclusion, universities should not be forced into an artificial dichotomy. T
   },
   {
     id: 2,
+    level: 'intermediate',
     cert: 'toeic',
     category: "TOEIC Writing Part 2 (Respond to a Written Request)",
     title: "Customer Support: Damaged Office Supplies Shipment",
@@ -388,6 +396,7 @@ OfficeWorld Supplies Ltd.`
   },
   {
     id: 3,
+    level: 'advanced',
     cert: 'ielts',
     category: "IELTS Academic Writing Task 1 (Report / Overview)",
     title: "Global Energy Consumption Trends (Report)",

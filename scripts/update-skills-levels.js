@@ -2,28 +2,33 @@ import fs from 'fs';
 
 let content = fs.readFileSync('lib/data/skills.ts', 'utf8');
 
-// For Reading Passages
-content = content.replace(/id: 1,/, "id: 1,\n    level: 'beginner',");
-content = content.replace(/id: 2,/, "id: 2,\n    level: 'intermediate',");
-content = content.replace(/id: 3,/, "id: 3,\n    level: 'advanced',");
-content = content.replace(/id: 4,/, "id: 4,\n    level: 'intermediate',");
-content = content.replace(/id: 5,/, "id: 5,\n    level: 'advanced',");
+// Replace top-level items by looking for "id: [number],\n    cert:"
+const replacements = {
+  // Reading
+  1: 'beginner',
+  2: 'intermediate',
+  3: 'advanced',
+  4: 'intermediate',
+  5: 'advanced',
+  // Listening
+  11: 'beginner',
+  12: 'intermediate',
+  13: 'advanced',
+  // Speaking
+  21: 'beginner',
+  22: 'intermediate',
+  23: 'advanced',
+  24: 'intermediate',
+  // Writing
+  31: 'beginner',
+  32: 'intermediate',
+  33: 'advanced',
+};
 
-// For Listening Exercises
-content = content.replace(/id: 11,/, "id: 11,\n    level: 'beginner',");
-content = content.replace(/id: 12,/, "id: 12,\n    level: 'intermediate',");
-content = content.replace(/id: 13,/, "id: 13,\n    level: 'advanced',");
-
-// For Speaking Topics
-content = content.replace(/id: 21,/, "id: 21,\n    level: 'beginner',");
-content = content.replace(/id: 22,/, "id: 22,\n    level: 'intermediate',");
-content = content.replace(/id: 23,/, "id: 23,\n    level: 'advanced',");
-content = content.replace(/id: 24,/, "id: 24,\n    level: 'intermediate',");
-
-// For Writing Prompts
-content = content.replace(/id: 31,/, "id: 31,\n    level: 'beginner',");
-content = content.replace(/id: 32,/, "id: 32,\n    level: 'intermediate',");
-content = content.replace(/id: 33,/, "id: 33,\n    level: 'advanced',");
+for (const [id, level] of Object.entries(replacements)) {
+  const regex = new RegExp(`id: ${id},\\s+cert:`, 'g');
+  content = content.replace(regex, `id: ${id},\n    level: '${level}',\n    cert:`);
+}
 
 fs.writeFileSync('lib/data/skills.ts', content);
-console.log('Skills levels updated!');
+console.log('Skills levels updated robustly!');

@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams, useRouter } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { Layers, CheckCircle2, Database, Trophy, Target, Star } from 'lucide-react';
 import { topicsData, vocabularyMetadata } from '@/lib/data/vocabulary';
 import { BackButton } from '@/components/layout/BackButton';

@@ -14,6 +14,62 @@ interface Props {
   topicData: TopicData;
 }
 
+function ExampleTranslator({ example, brandColor }: { example: string, brandColor: string }) {
+  const [translation, setTranslation] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const translate = async () => {
+    if (translation || isLoading) return;
+    setIsLoading(true);
+    try {
+      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(example)}&langpair=en|vi&de=tunguyenhd@gmail.com`);
+      const data = await res.json();
+      if (data?.responseData?.translatedText) {
+        setTranslation(data.responseData.translatedText);
+      } else {
+        setTranslation("Không thể dịch lúc này.");
+      }
+    } catch (e) {
+      setTranslation("Lỗi kết nối.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <div className="flex justify-between items-start gap-4">
+        <span style={{ fontStyle: 'italic' }}>&quot;{example}&quot;</span>
+        {!translation && (
+          <button
+            onClick={translate}
+            disabled={isLoading}
+            className="text-xs shrink-0"
+            style={{ 
+              color: brandColor, 
+              opacity: isLoading ? 0.5 : 0.8, 
+              background: 'rgba(255,255,255,0.05)', 
+              borderRadius: '4px',
+              padding: '0.2rem 0.5rem',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              border: 'none',
+              fontFamily: 'inherit',
+              transition: 'opacity 0.2s'
+            }}
+          >
+            {isLoading ? 'Đang dịch...' : 'Dịch'}
+          </button>
+        )}
+      </div>
+      {translation && (
+        <div style={{ fontSize: '0.95rem', color: 'var(--text-primary)', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.5rem', marginTop: '0.25rem' }}>
+          {translation}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function VocabularyStudyClient({ certType, topicData }: Props) {
   const router = useRouter();
   const brandColor = certType === 'ielts' ? 'var(--brand-ielts)' : 'var(--brand-toeic)';
@@ -105,20 +161,11 @@ export default function VocabularyStudyClient({ certType, topicData }: Props) {
                   {item.definitionVi}
                 </div>
                 <div style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.04)', borderRadius: '0.5rem', color: 'var(--text-secondary)', borderLeft: `3px solid ${brandColor}`, lineHeight: '1.6' }}>
-                  <div className="flex justify-between items-start gap-4">
-                    <span style={{ fontStyle: 'italic' }}>&quot;{item.example}&quot;</span>
-                    {item.example && (
-                      <a
-                        href={`https://translate.google.com/?sl=en&tl=vi&text=${encodeURIComponent(item.example)}&op=translate`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs shrink-0"
-                        style={{ color: brandColor, opacity: 0.8, textDecoration: 'none', padding: '0.2rem 0.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}
-                      >
-                        Dịch ↗
-                      </a>
-                    )}
-                  </div>
+                  {item.example ? (
+                    <ExampleTranslator example={item.example} brandColor={brandColor} />
+                  ) : (
+                    <span style={{ fontStyle: 'italic' }}>Không có ví dụ</span>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { BackButton } from '@/components/layout/BackButton';
 import type { IrregularVerb, RegularVerb, CertType } from '@/lib/types';
 
 type Tab = 'irregular' | 'regular';
+
+const BATCH_SIZE = 30;
 
 interface Props {
   certType: CertType;
@@ -18,6 +20,13 @@ export default function VerbsClient({ certType, irregularVerbs, regularVerbs }: 
 
   const [activeTab, setActiveTab] = useState<Tab>('irregular');
   const [searchTerm, setSearchTerm] = useState('');
+  const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Reset visible count when tab or search changes
+  useEffect(() => {
+    setVisibleCount(BATCH_SIZE);
+  }, [activeTab, searchTerm]);
 
   const filteredIrregular = useMemo(() => {
     if (!searchTerm) return irregularVerbs;
@@ -39,6 +48,27 @@ export default function VerbsClient({ certType, irregularVerbs, regularVerbs }: 
       v.meaning.toLowerCase().includes(lower)
     );
   }, [searchTerm, regularVerbs]);
+
+  const currentData = activeTab === 'irregular' ? filteredIrregular : filteredRegular;
+  const visibleData = currentData.slice(0, visibleCount);
+  const hasMore = visibleCount < currentData.length;
+
+  // IntersectionObserver to load more when sentinel is visible
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const sentinelCallback = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) observerRef.current.disconnect();
+    if (!node) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount(prev => prev + BATCH_SIZE);
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observerRef.current.observe(node);
+  }, []);
 
   const thStyle = 'p-2 md:p-4 font-semibold text-xs md:text-base';
   const tdStyle = 'p-2 md:p-4 text-xs md:text-base';
@@ -149,9 +179,9 @@ export default function VerbsClient({ certType, irregularVerbs, regularVerbs }: 
             </tr>
           </thead>
           <tbody>
-            {activeTab === 'irregular' ? (
-              filteredIrregular.length > 0 ? (
-                filteredIrregular.map((verb, idx) => (
+            {visibleData.length > 0 ? (
+              activeTab === 'irregular' ? (
+                (visibleData as IrregularVerb[]).map((verb, idx) => (
                   <tr key={`irreg-${idx}`} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                     <td className={`${tdStyle} font-medium`} style={{ color: brandColor, wordBreak: 'break-word' }}>{verb.v1}</td>
                     <td className={tdStyle} style={{ wordBreak: 'break-word' }}>{verb.v2}</td>
@@ -160,15 +190,7 @@ export default function VerbsClient({ certType, irregularVerbs, regularVerbs }: 
                   </tr>
                 ))
               ) : (
-                <tr>
-                  <td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                    No results found for &quot;{searchTerm}&quot;
-                  </td>
-                </tr>
-              )
-            ) : (
-              filteredRegular.length > 0 ? (
-                filteredRegular.map((verb, idx) => (
+                (visibleData as RegularVerb[]).map((verb, idx) => (
                   <tr key={`reg-${idx}`} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                     <td className={`${tdStyle} font-medium`} style={{ color: brandColor, wordBreak: 'break-word' }}>{verb.verb}</td>
                     <td className={tdStyle} style={{ wordBreak: 'break-word' }}>{verb.ed}</td>
@@ -176,17 +198,55 @@ export default function VerbsClient({ certType, irregularVerbs, regularVerbs }: 
                     <td className={tdStyle} style={{ color: 'var(--text-secondary)', wordBreak: 'break-word' }}>{verb.meaning}</td>
                   </tr>
                 ))
-              ) : (
-                <tr>
-                  <td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                    No results found for &quot;{searchTerm}&quot;
-                  </td>
-                </tr>
               )
+            ) : (
+              <tr>
+                <td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                  No results found for &quot;{searchTerm}&quot;
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
       </div>
+
+      {/* Sentinel for infinite scroll + loading indicator */}
+      {hasMore && (
+        <div
+          ref={sentinelCallback}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '2rem',
+            color: 'var(--text-muted)',
+            fontSize: '0.9rem',
+            gap: '0.5rem',
+          }}
+        >
+          <div style={{
+            width: '1.25rem',
+            height: '1.25rem',
+            border: `2px solid ${brandColor}`,
+            borderTopColor: 'transparent',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite',
+          }} />
+          Loading more...
+        </div>
+      )}
+
+      {!hasMore && visibleData.length > 0 && (
+        <div style={{ textAlign: 'center', padding: '1.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+          Hiển thị {visibleData.length}/{currentData.length} động từ
+        </div>
+      )}
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
